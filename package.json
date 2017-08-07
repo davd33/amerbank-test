@@ -1,0 +1,31 @@
+{
+  "name": "amerbank-test",
+  "version": "1.0.0",
+  "description": "Amerbank interview test.",
+  "scripts": {
+    "test": "exit 0",
+    "start": "./scripts/run-all.sh"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/davd33/amerbank-test.git"
+  },
+  "author": "David Rueda",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/davd33/amerbank-test/issues"
+  },
+  "homepage": "https://github.com/davd33/amerbank-test#readme",
+  "dependencies": {
+    "boom": "^5.2.0",
+    "hapi": "^16.5.2",
+    "passport": "^0.3.2",
+    "passport-local": "^1.0.0",
+    "request": "^2.81.0",
+    "seneca": "^3.4.1",
+    "seneca-basic": "^0.5.1",
+    "seneca-entity": "^2.0.2",
+    "seneca-user": "^2.1.1",
+    "seneca-web": "^2.1.0"
+  }
+}
