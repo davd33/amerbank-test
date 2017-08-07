@@ -1,11 +1,13 @@
-let Hapi = require('hapi')
-let Seneca = require('seneca')
-let Web = require('seneca-web')
-let Routes = require('./routes')
+const log = require('pino')()
+const Hapi = require('hapi')
+const Seneca = require('seneca')
+const Web = require('seneca-web')
+const WebAdapter = require('seneca-web-adapter-hapi')
+const Routes = require('./routes')
 
 let config = {
   routes: Routes,
-  adapter: require('seneca-web-adapter-hapi'),
+  adapter: WebAdapter,
   context: (() => {
     let server = new Hapi.Server()
     server.connection({ port: 4333 })
@@ -18,25 +20,13 @@ let seneca = Seneca()
   .use('entity')
   .use('./plugin')
   .use(Web, config)
-  .ready(startMesh)
-
-function startMesh() {
-
-  let server = this.export('web/context')()
-
-  server.start(() => {
-    console.log(`Server started on: ${server.info.uri}`)
+  .use('mesh', {
+    isbase: true,
   })
+  .ready(() => {
+    let server = seneca.export('web/context')()
 
-  const kubernetes = this.options().plugin.kubernetes
-
-  this
-    .use('mesh', {
-      host: kubernetes.myip,
-      bases: kubernetes.pods
-        .filter(pod => pod.labels['seneca-base'] === 'yes')
-        .filter(pod => pod.status === 'Running')
-        .map(pod => `${pod.ip}:39000`),
-      type: 'tcp'
+    server.start(() => {
+      log.info(`Server started on: ${server.info.uri}`)
     })
-}
+  })

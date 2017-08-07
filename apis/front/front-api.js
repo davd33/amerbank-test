@@ -6,10 +6,10 @@ const Req = require('request');
 const Passport = require('passport')
 const LocalStrategy = require('passport-local').Strategy
 
-const ServiceUrl = process.env.MsApiUrl;
+const ServiceUrl = process.env.MS_API_URL;
 
 if (!ServiceUrl) {
-  console.log('Missing env variable: MsApiUrl (ELB Dns Name) - url to the gate microservice');
+  console.log('Missing env variable: MS_API_URL - url to the gate microservice');
   process.exit(1);
 }
 
