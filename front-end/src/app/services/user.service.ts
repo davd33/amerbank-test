@@ -11,9 +11,16 @@ export class UserService {
   private registerUrl = `${environment.FRONT_API_URL}/user/register`;
   private loginUrl = `${environment.FRONT_API_URL}/user/login`;
 
-  private userLogin: any;
-
   constructor(private http: Http) {
+  }
+
+  isLogged(email: string) {
+    let userEmail = localStorage.getItem('userEmail');
+    return userEmail && decodeURIComponent(userEmail) === email;
+  }
+
+  logout() {
+    localStorage.removeItem('userEmail');
   }
 
   register(email: string, password: string) {
@@ -43,8 +50,9 @@ export class UserService {
       )
       .toPromise()
       .then(res => {
-        this.userLogin = res.json();
-        return this.userLogin;
+        let userLogin = res.json();
+        localStorage.setItem('userEmail', userLogin.account.email);
+        return userLogin;
       })
       .catch(UserService.handleError);
   }
