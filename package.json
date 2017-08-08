@@ -4,7 +4,8 @@
   "description": "Amerbank interview test.",
   "scripts": {
     "test": "exit 0",
-    "start": "./scripts/run-all.sh"
+    "start": "./scripts/run-all.sh",
+    "monitor": "./scripts/monitor.sh"
   },
   "repository": {
     "type": "git",
@@ -17,10 +18,10 @@
   },
   "homepage": "https://github.com/davd33/amerbank-test#readme",
   "dependencies": {
+    "bell": "^8.7.0",
     "boom": "^5.2.0",
     "hapi": "^16.5.2",
-    "passport": "^0.3.2",
-    "passport-local": "^1.0.0",
+    "hapi-auth-cookie": "^7.0.0",
     "pino": "^4.7.1",
     "request": "^2.81.0",
     "seneca": "^3.4.1",
@@ -30,6 +31,7 @@
     "seneca-mesh": "^0.10.0",
     "seneca-user": "^2.1.1",
     "seneca-web": "^2.1.0",
-    "seneca-web-adapter-hapi": "^1.0.2"
+    "seneca-web-adapter-hapi": "^1.0.2",
+    "uuid": "^3.1.0"
   }
 }

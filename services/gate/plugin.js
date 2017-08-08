@@ -1,28 +1,35 @@
 function api(options) {
 
-  this.add('role:user,cmd:add', function (msg, respond) {
+  // LOGIN
+  this.add('gate:user,cmd:login', function (msg, respond) {
 
     let data = {
       email: msg.args.body.email,
-      price: msg.args.body.price,
-      comment: msg.args.body.comment
+      password: msg.args.body.password
     }
 
-    this.act(`registration:store,cmd:add`, {data: data}, respond)
+    this.act('role:user,cmd:login', data, respond)
   })
 
-  this.add('role:user,cmd:delete', function (msg, respond) {
-
+  // REGISTER
+  this.add('gate:user,cmd:register', function (msg, respond) {
     let data = {
-      userId: msg.args.query.userId,
-      token: msg.args.query.userToken
+      email: msg.args.body.email,
+      password: msg.args.body.password,
+      repeat: msg.args.body.repeat,
+      name: msg.args.body.name
     }
 
-    this.act(`registration:store,cmd:delete`, {data: data}, respond)
+    this.act('role:user,cmd:register', data, respond)
   })
 
-  this.add('role:user,cmd:list', function (msg, respond) {
-    this.act(`registration:store,cmd:list`, respond)
+  // AUTHENTICATE TOKEN
+  this.add('gate:user,cmd:auth', function (msg, respond) {
+    let data = {
+      token: msg.args.body.token
+    }
+
+    this.act('role:user,cmd:auth', data, respond)
   })
 
 }

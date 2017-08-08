@@ -1,18 +1,18 @@
 module.exports = [
   {
     prefix: '/user',
-    pin: 'role:user,cmd:*',
+    pin: 'gate:user,cmd:*',
     map: {
-      add: {
+      register: {
         POST: true,
         json: true
       },
-      delete: {
-        GET: true,
+      login: {
+        POST: true,
         json: true
       },
-      list: {
-        GET: true,
+      auth: {
+        POST: true,
         json: true
       }
     }

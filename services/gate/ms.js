@@ -22,6 +22,7 @@ let seneca = Seneca()
   .use(Web, config)
   .use('mesh', {
     isbase: true,
+    bases: ['127.0.0.1']
   })
   .ready(() => {
     let server = seneca.export('web/context')()

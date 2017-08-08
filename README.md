@@ -29,9 +29,14 @@ In order to have a secure web site, we'd like to run our microservices in a prot
 
 # Application
 
-## Starting
+## Commands
 
-Place yourself in the project's directory and run `npm start`.
+Open the shell and place yourself in the project's directory first.
+
+Command name | Command
+--- | ---
+Start project | `npm start`
+Monitor services | `npm run monitor`
 
 ## Configuration
 

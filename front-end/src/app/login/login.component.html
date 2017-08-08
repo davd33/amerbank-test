@@ -1,0 +1,15 @@
+<h2>Please log in!</h2>
+<h3>or <a routerLink="/register">register</a></h3>
+<div>
+  <form #registerForm="ngForm" novalidate (ngSubmit)="login(registerForm)">
+    <label>
+      Email:
+      <input type="text" ngModel name="email" required>
+    </label>
+    <label>
+      Password:
+      <input type="password" ngModel name="password" required>
+    </label>
+    <button>Log in!</button>
+  </form>
+</div>
