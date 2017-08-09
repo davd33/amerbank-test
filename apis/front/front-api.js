@@ -49,6 +49,13 @@ server.route({
   handler: commentListHandler
 })
 
+// APPROVE COMMENT
+server.route({
+  method: 'POST',
+  path: '/api/comment/approve',
+  handler: commentApproveHandler
+})
+
 server.start((err) => {
   if (err) throw err
   Log.info('Server running at:', server.info.uri)
@@ -169,6 +176,23 @@ function commentListHandler(request, reply) {
 
   Req.post(
     ServiceUrl + '/comment/list',
+    {form: payload},
+    genericCB(data => {
+      if (!data.ok) return reply({why: data.why})
+      return reply(data)
+    })
+  )
+}
+
+function commentApproveHandler(request, reply) {
+
+  let payload = {
+    token: encodeURIComponent(request.payload.token),
+    id: encodeURIComponent(request.payload.id)
+  }
+
+  Req.post(
+    ServiceUrl + '/comment/approve',
     {form: payload},
     genericCB(data => {
       if (!data.ok) return reply({why: data.why})

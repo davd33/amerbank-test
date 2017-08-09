@@ -32,6 +32,16 @@ export class CommentsComponent implements OnInit {
       })
   }
 
+  approve(c_id: string) {
+    this.commentService.approve(c_id)
+      .then(res => {
+        console.log(res);
+      })
+      .catch(e => {
+        console.log(e);
+      })
+  }
+
   save(form) {
     if (this.user.isLogged()) {
       this.commentService.save(UserService.getUserEmail(), form.controls.comment.value, UserService.getUserToken())

@@ -11,5 +11,6 @@
 
 <div *ngFor="let c of comments">
   <em>from {{d(c.email)}}</em>
+  <div><button (click)="approve(c.id)">Approve it!</button></div>
   <p>{{d(c.comment)}}</p>
 </div>

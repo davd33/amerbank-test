@@ -10,6 +10,7 @@ export class CommentsService {
 
   private saveUrl = `${environment.FRONT_API_URL}/comment/save`;
   private listUrl = `${environment.FRONT_API_URL}/comment/list`;
+  private approveUrl = `${environment.FRONT_API_URL}/comment/approve`;
 
   constructor(private http: Http) { }
 
@@ -36,6 +37,21 @@ export class CommentsService {
         this.listUrl,
         {
           token: token
+        }
+      )
+      .toPromise()
+      .then(res => {
+        return res.json();
+      })
+      .catch(CommentsService.handleError);
+  }
+
+  approve(id: string) {
+    return this.http
+      .post(
+        this.approveUrl,
+        {
+          id: id
         }
       )
       .toPromise()
