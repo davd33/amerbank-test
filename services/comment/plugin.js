@@ -2,13 +2,13 @@ module.exports = function (options) {
   this.add('role:comment,cmd:save', function (args, done) {
 
     // VERIFY USER AND SAVE COMMENT
-    this.act('role:user,cmd:auth', {token: encodeURIComponent(args.token)}, (err, data) => {
+    this.act('role:user,cmd:auth', {token: args.token}, (err, data) => {
       if (err) return done(err)
       if (!data.ok) return done(data)
 
       let comment = this.make$('comment', {
         email: args.email,
-        comment: encodeURIComponent(args.comment),
+        comment: args.comment,
         approved: false
       }).save$((err, ent) => {
 
@@ -32,7 +32,7 @@ module.exports = function (options) {
         })
     } else {
       // VERIFY USER AUTH AND ROLE THEN LIST ALL COMMENTS
-      this.act('role:user,cmd:auth', {token: encodeURIComponent(token)}, (err, data) => {
+      this.act('role:user,cmd:auth', {token: token}, (err, data) => {
         if (err) return done(err)
         if (!data.ok) return done(data)
 
