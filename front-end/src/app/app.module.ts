@@ -36,7 +36,7 @@ import { LoginComponent } from './login/login.component';
       },
       {
         path: '',
-        redirectTo: '/home',
+        redirectTo: '/login',
         pathMatch: 'full'
       }
     ])

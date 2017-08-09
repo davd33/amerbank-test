@@ -12,6 +12,9 @@ export class RegisterComponent implements OnInit {
 
   email: string;
   password: string;
+  role: string;
+
+  roles = [{name: 'User', default: true}, {name: 'Admin'}];
 
   constructor(private user: UserService,
               private router: Router) { }
@@ -21,7 +24,7 @@ export class RegisterComponent implements OnInit {
 
   register(form: any) {
     if (form.valid) {
-      this.user.register(form.controls.email.value, form.controls.password.value)
+      this.user.register(form.controls.email.value, form.controls.password.value, form.controls.role.value.name)
         .then(res => {
           this.router.navigate(['/']);
         })

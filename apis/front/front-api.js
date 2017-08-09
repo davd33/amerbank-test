@@ -10,7 +10,7 @@ const uuidv1 = require('uuid/v1')
 const ServiceUrl = process.env.MS_API_URL;
 
 if (!ServiceUrl) {
-  console.log('Missing env variable: MS_API_URL - url to the gate microservice');
+  Log.info('Missing env variable: MS_API_URL - url to the gate microservice');
   process.exit(1);
 }
 
@@ -101,7 +101,8 @@ function validateUser(email, password, done) {
 
 function registerUser(done) {
   return (err, res) => {
-    if (err) Boom.badRequest(err.message)
+    if (err) return Boom.badRequest(err.message)
+    if (res.body === '') return Boom.badRequest('body_empty')
 
     let body = JSON.parse(res.body)
 
@@ -143,7 +144,8 @@ function registerHandler(request, reply) {
 
   let payload = {
     email: encodeURIComponent(request.payload.email),
-    password: encodeURIComponent(request.payload.password)
+    password: encodeURIComponent(request.payload.password),
+    role: encodeURIComponent(request.payload.role)
   }
 
   Req.post(

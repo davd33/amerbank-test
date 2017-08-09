@@ -1,6 +1,7 @@
 <h2>Please log in!</h2>
 <h3>or <a routerLink="/register">register</a></h3>
 <div>
+  <em>{{message}}</em>
   <form #registerForm="ngForm" novalidate (ngSubmit)="login(registerForm)">
     <label>
       Email:

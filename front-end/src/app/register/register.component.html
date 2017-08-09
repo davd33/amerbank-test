@@ -10,6 +10,13 @@
       Password:
       <input type="password" ngModel name="password" required>
     </label>
+    <label>
+      Role:
+      <select ngModel name="role">
+        <option selected disabled>Choose a role</option>
+        <option *ngFor="let r of roles" [ngValue]="r">{{r.name}}</option>
+      </select>
+    </label>
     <button>Register</button>
   </form>
 </div>

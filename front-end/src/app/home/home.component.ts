@@ -14,6 +14,7 @@ import {UserService} from "../services/user.service";
 export class HomeComponent implements OnInit {
 
   email: string;
+  userRole: string;
 
   constructor(private route: ActivatedRoute,
               private router: Router,
@@ -26,6 +27,7 @@ export class HomeComponent implements OnInit {
       else {
         if (this.user.isLogged(email)) {
           this.email = email;
+          this.userRole = UserService.getUserNick();
         } else {
           this.router.navigate(['/login']);
         }

@@ -15,21 +15,22 @@ export class UserService {
   }
 
   isLogged(email: string) {
-    let userEmail = localStorage.getItem('userEmail');
+    let userEmail = UserService.getUserEmail();
     return userEmail && decodeURIComponent(userEmail) === email;
   }
 
   logout() {
-    localStorage.removeItem('userEmail');
+    UserService.clearUser()
   }
 
-  register(email: string, password: string) {
+  register(email: string, password: string, role: string) {
     return this.http
       .post(
         this.registerUrl,
         {
           email: email,
-          password: password
+          password: password,
+          role: role
         }
       )
       .toPromise()
@@ -51,7 +52,7 @@ export class UserService {
       .toPromise()
       .then(res => {
         let userLogin = res.json();
-        localStorage.setItem('userEmail', userLogin.account.email);
+        UserService.storeUser(userLogin)
         return userLogin;
       })
       .catch(UserService.handleError);
@@ -59,6 +60,30 @@ export class UserService {
 
   private static handleError(error: any): Promise<any> {
     return Promise.reject(error.message || error);
+  }
+
+  private static storeUser(userLogin) {
+    localStorage.setItem('user_email', userLogin.account.email);
+    localStorage.setItem('user_token', userLogin.account.token);
+    localStorage.setItem('user_nick', userLogin.account.nick);
+  }
+
+  public static getUserEmail(): string {
+    return localStorage.getItem('user_email');
+  }
+
+  private static getUserToken(): string {
+    return localStorage.getItem('user_token');
+  }
+
+  public static getUserNick(): string {
+    return localStorage.getItem('user_nick');
+  }
+
+  private static clearUser() {
+    localStorage.removeItem('user_email');
+    localStorage.removeItem('user_token');
+    localStorage.removeItem('user_nick');
   }
 
 }
