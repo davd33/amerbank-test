@@ -9,4 +9,7 @@
   </form>
 </div>
 
-<!--<div *ngFor="let c of comments">{{c}}</div>-->
+<div *ngFor="let c of comments">
+  <em>from {{d(c.email)}}</em>
+  <p>{{d(c.comment)}}</p>
+</div>

@@ -16,4 +16,12 @@ module.exports = function (options) {
       })
     })
   })
+
+  this.add('role:comment,cmd:list', function (args, done) {
+
+    let comment = this.make$('comment').list$((err, ent) => {
+      if (err) return done(err, ent)
+      done({ok: true, data: ent})
+    })
+  })
 }

@@ -42,6 +42,13 @@ server.route({
   handler: commentSaveHandler
 })
 
+// LIST COMMENTS
+server.route({
+  method: 'GET',
+  path: '/api/comment/list',
+  handler: commentListHandler
+})
+
 server.start((err) => {
   if (err) throw err
   Log.info('Server running at:', server.info.uri)
@@ -79,14 +86,14 @@ function registerUser(done) {
   }
 }
 
-function saveComment(done) {
+function genericCB(done) {
   return (err, res) => {
     if (err) return Boom.badRequest(err.message)
 
     let body = JSON.parse(res.body)
 
     if (body.ok) {
-      return done({ok: true})
+      return done({ok: true, data: body.data})
     } else {
       return done({ok: false, why: body.why})
     }
@@ -147,9 +154,20 @@ function commentSaveHandler(request, reply) {
   Req.post(
     ServiceUrl + '/comment/save',
     {form: payload},
-    saveComment(data => {
+    genericCB(data => {
       if (!data.ok) return reply({why: data.why})
-      return reply({ok: true})
+      return reply(data)
+    })
+  )
+}
+
+function commentListHandler(request, reply) {
+
+  Req.get(
+    ServiceUrl + '/comment/list',
+    genericCB(data => {
+      if (!data.ok) return reply({why: data.why})
+      return reply(data)
     })
   )
 }

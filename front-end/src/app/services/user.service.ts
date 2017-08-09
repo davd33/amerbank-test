@@ -16,7 +16,7 @@ export class UserService {
 
   isLoggedEmail(email: string) {
     let userEmail = UserService.getUserEmail();
-    return userEmail && decodeURIComponent(userEmail) === email;
+    return userEmail && userEmail === email;
   }
 
   isLogged() {
@@ -73,7 +73,7 @@ export class UserService {
   }
 
   public static getUserEmail(): string {
-    return localStorage.getItem('user_email');
+    return decodeURIComponent(localStorage.getItem('user_email'));
   }
 
   public static getUserToken(): string {

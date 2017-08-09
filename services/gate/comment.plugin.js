@@ -12,6 +12,12 @@ function api(options) {
     this.act('role:comment,cmd:save', data, respond)
   })
 
+  // LIST COMMENTS
+  this.add('gate:comment,cmd:list', function (msg, respond) {
+
+    this.act('role:comment,cmd:list', {}, respond)
+  })
+
 }
 
 module.exports = api

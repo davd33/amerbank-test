@@ -24,6 +24,10 @@ module.exports = [
       save: {
         POST: true,
         json: true
+      },
+      list: {
+        GET: true,
+        json: true
       }
     }
   }

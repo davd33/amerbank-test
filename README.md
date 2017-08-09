@@ -13,10 +13,10 @@ Using microservices, we will solve the following tasks:
 
 From the feature we can infer the messages we will need in our microservices system and we can also assign it a microservice:
 
-Feature | Message | Service
---- | --- | ---
-register | role:user,cmd:register | user
-login | role:user,cmd:login | user
+Feature | Message
+--- | ---
+register | role:user,cmd:register
+login | role:user,cmd:login
 
 For simplifying the design we will choose to have one microservice handling both create and get user messages.
 
@@ -37,13 +37,15 @@ The user's role will be stored in the `nick` entry of the `user` entity provided
 
 Here as in the section above we will define our messages:
 
-Feature | Message | Service
---- | --- | ---
-post comment | role:comment,cmd:save | comment
-reply to a comment | role:comment,cmd:reply | comment
-approve comment | role:comment,cmd:approve | comment
+Feature | Message
+--- | ---
+list comments | role:comment,cmd:list
+post comment | role:comment,cmd:save
+reply to a comment | role:comment,cmd:reply
+approve comment | role:comment,cmd:approve
 
-The messages are quite simple and bound to our business valued features.
+The messages are quite simple and bound to our business valued features.\
+They will be implemented in the `comment` microservice.
 
 # Application
 
