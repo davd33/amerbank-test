@@ -16,7 +16,7 @@ function api(options) {
     let data = {
       email: msg.args.body.email,
       password: msg.args.body.password,
-      nick: msg.args.body.role
+      userRole: msg.args.body.role
     }
 
     this.act('role:user,cmd:register', data, respond)

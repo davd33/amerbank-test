@@ -15,7 +15,22 @@ function api(options) {
   // LIST COMMENTS
   this.add('gate:comment,cmd:list', function (msg, respond) {
 
-    this.act('role:comment,cmd:list', {}, respond)
+    let data = {
+      token: msg.args.body.token
+    }
+
+    this.act('role:comment,cmd:list', data, respond)
+  })
+
+  // APPROVE COMMENT
+  this.add('gate:comment,cmd:approve', function (msg, respond) {
+
+    let data = {
+      id: msg.args.body.id,
+      token: msg.args.body.token
+    }
+
+    this.act('role:comment,cmd:approve', data, respond)
   })
 
 }

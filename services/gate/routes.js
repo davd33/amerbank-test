@@ -26,7 +26,11 @@ module.exports = [
         json: true
       },
       list: {
-        GET: true,
+        POST: true,
+        json: true
+      },
+      approve: {
+        POST: true,
         json: true
       }
     }

@@ -30,9 +30,14 @@ export class CommentsService {
       .catch(CommentsService.handleError);
   }
 
-  list() {
+  list(token: string) {
     return this.http
-      .get(this.listUrl)
+      .post(
+        this.listUrl,
+        {
+          token: token
+        }
+      )
       .toPromise()
       .then(res => {
         return res.json();

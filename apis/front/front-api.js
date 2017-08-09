@@ -44,7 +44,7 @@ server.route({
 
 // LIST COMMENTS
 server.route({
-  method: 'GET',
+  method: 'POST',
   path: '/api/comment/list',
   handler: commentListHandler
 })
@@ -64,7 +64,7 @@ function validateUser(email, password, done) {
       let body = JSON.parse(res.body)
 
       if (body.ok) {
-        return done({ok: true, account: body.login})
+        return done({ok: true, account: body.login, role: body.user.userRole})
       } else {
         return done({ok: false, why: body.why})
       }
@@ -116,7 +116,7 @@ function loginHandler(request, reply) {
   validateUser(email, password, data => {
     if (!data.ok) return reply({why: data.why})
 
-    return reply({account: data.account})
+    return reply(data)
   })
 }
 
@@ -163,8 +163,13 @@ function commentSaveHandler(request, reply) {
 
 function commentListHandler(request, reply) {
 
-  Req.get(
+  let payload = {
+    token: encodeURIComponent(request.payload.token)
+  }
+
+  Req.post(
     ServiceUrl + '/comment/list',
+    {form: payload},
     genericCB(data => {
       if (!data.ok) return reply({why: data.why})
       return reply(data)

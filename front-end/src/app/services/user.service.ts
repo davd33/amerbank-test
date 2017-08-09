@@ -69,7 +69,8 @@ export class UserService {
   private static storeUser(userLogin) {
     localStorage.setItem('user_email', userLogin.account.email);
     localStorage.setItem('user_token', userLogin.account.token);
-    localStorage.setItem('user_nick', userLogin.account.nick);
+    localStorage.setItem('user_role', userLogin.role);
+    localStorage.setItem('user_id', userLogin.account.user);
   }
 
   public static getUserEmail(): string {
@@ -80,14 +81,19 @@ export class UserService {
     return localStorage.getItem('user_token');
   }
 
-  public static getUserNick(): string {
-    return localStorage.getItem('user_nick');
+  public static getUserRole(): string {
+    return localStorage.getItem('user_role');
+  }
+
+  public static getUserId(): string {
+    return localStorage.getItem('user_id');
   }
 
   private static clearUser() {
     localStorage.removeItem('user_email');
     localStorage.removeItem('user_token');
-    localStorage.removeItem('user_nick');
+    localStorage.removeItem('user_role');
+    localStorage.removeItem('user_id');
   }
 
 }

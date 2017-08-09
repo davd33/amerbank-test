@@ -27,7 +27,7 @@ In order to have a secure web site, we'd like to run our microservices in a prot
 
 ![global-design](./docs/img/global-design.png)
 
-The user's role will be stored in the `nick` entry of the `user` entity provided by seneca user's plugin.
+The user's role will be stored in the `name` field of the `user` entity provided by seneca user's plugin.
 
 # Create a comment system for registered users
 

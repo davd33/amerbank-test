@@ -23,7 +23,7 @@ export class CommentsComponent implements OnInit {
   }
 
   listComments() {
-    this.commentService.list()
+    this.commentService.list(UserService.getUserToken())
       .then(res => {
         this.comments = res.data;
       })

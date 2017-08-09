@@ -27,7 +27,7 @@ export class HomeComponent implements OnInit {
       else {
         if (this.user.isLoggedEmail(email)) {
           this.email = email;
-          this.userRole = UserService.getUserNick();
+          this.userRole = UserService.getUserRole();
         } else {
           this.router.navigate(['/login']);
         }
