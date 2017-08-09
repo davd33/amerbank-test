@@ -2,10 +2,8 @@
 
 const Log = require('pino')()
 const Hapi = require('hapi')
-const CookieAuth = require('hapi-auth-cookie')
 const Boom = require('boom')
 const Req = require('request')
-const uuidv1 = require('uuid/v1')
 
 const ServiceUrl = process.env.MS_API_URL;
 
@@ -23,63 +21,31 @@ server.connection({
   port: 4222
 });
 
-server.register(CookieAuth, err => {
-
-  if (err) throw err
-
-  const cache = server.cache({segment: 'sessions', expiresIn: 3 * 24 * 60 * 60 * 1000});
-  server.app.cache = cache;
-
-  server.auth.strategy('session', 'cookie', true, {
-    cookie: 'amerbank-test',
-    password: 'Amerbank01-Test12-Cookie93-Password78',
-    isSecure: false,
-    validateFunc: validateCookie(cache)
-  })
-
-  // LOGIN
-  server.route({
-    method: 'POST',
-    path: '/api/user/login',
-    config: {
-      handler: loginHandler,
-      auth: {
-        mode: 'try'
-      }
-    }
-  })
-
-  // REGISTER
-  server.route({
-    method: 'POST',
-    path: '/api/user/register',
-    config: {
-      handler: registerHandler,
-      auth: {
-        mode: 'try'
-      }
-    }
-  })
-
-  server.start((err) => {
-    if (err) throw err
-    Log.info('Server running at:', server.info.uri)
-  })
-
+// LOGIN
+server.route({
+  method: 'POST',
+  path: '/api/user/login',
+  handler: loginHandler
 })
 
-function validateCookie(cache) {
-  return (request, session, done) => {
-    cache.get(session.sid, (err, cached) => {
+// REGISTER
+server.route({
+  method: 'POST',
+  path: '/api/user/register',
+  handler: registerHandler
+})
 
-      if (err) return done(err, false)
+// SAVE COMMENT
+server.route({
+  method: 'POST',
+  path: '/api/comment/save',
+  handler: commentSaveHandler
+})
 
-      if (!cached) return done(null, false)
-
-      return done(null, true, cached.account)
-    });
-  }
-}
+server.start((err) => {
+  if (err) throw err
+  Log.info('Server running at:', server.info.uri)
+})
 
 function validateUser(email, password, done) {
   Req.post(
@@ -102,12 +68,25 @@ function validateUser(email, password, done) {
 function registerUser(done) {
   return (err, res) => {
     if (err) return Boom.badRequest(err.message)
-    if (res.body === '') return Boom.badRequest('body_empty')
 
     let body = JSON.parse(res.body)
 
     if (body.ok) {
       return done({ok: true, user: body.user})
+    } else {
+      return done({ok: false, why: body.why})
+    }
+  }
+}
+
+function saveComment(done) {
+  return (err, res) => {
+    if (err) return Boom.badRequest(err.message)
+
+    let body = JSON.parse(res.body)
+
+    if (body.ok) {
+      return done({ok: true})
     } else {
       return done({ok: false, why: body.why})
     }
@@ -130,13 +109,7 @@ function loginHandler(request, reply) {
   validateUser(email, password, data => {
     if (!data.ok) return reply({why: data.why})
 
-    const sid = uuidv1()
-    request.server.app.cache.set(sid, {account: data.account}, 0, err => {
-      if (err) return reply(err)
-
-      request.cookieAuth.set({sid: sid})
-      return reply({account: data.account})
-    })
+    return reply({account: data.account})
   })
 }
 
@@ -157,14 +130,26 @@ function registerHandler(request, reply) {
       validateUser(payload.email, payload.password, validateData => {
         if (!validateData.ok) return reply({why: validateData.why})
 
-        const sid = uuidv1()
-        request.server.app.cache.set(sid, {account: validateData.account}, 0, err => {
-          if (err) return reply(err)
-
-          request.cookieAuth.set({sid: sid})
-          return reply({ok: true})
-        })
+        return reply({ok: true})
       })
+    })
+  )
+}
+
+function commentSaveHandler(request, reply) {
+
+  let payload = {
+    token: encodeURIComponent(request.payload.token),
+    comment: encodeURIComponent(request.payload.comment),
+    email: encodeURIComponent(request.payload.email)
+  }
+
+  Req.post(
+    ServiceUrl + '/comment/save',
+    {form: payload},
+    saveComment(data => {
+      if (!data.ok) return reply({why: data.why})
+      return reply({ok: true})
     })
   )
 }

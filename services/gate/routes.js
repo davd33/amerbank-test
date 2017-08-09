@@ -16,5 +16,15 @@ module.exports = [
         json: true
       }
     }
+  },
+  {
+    prefix: '/comment',
+    pin: 'gate:comment,cmd:*',
+    map: {
+      save: {
+        POST: true,
+        json: true
+      }
+    }
   }
 ]

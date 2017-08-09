@@ -9,13 +9,16 @@ import {RouterModule} from "@angular/router";
 import { RegisterComponent } from './register/register.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
+import { CommentsComponent } from './comments/comments.component';
+import {CommentsService} from "./services/comments.service";
 
 @NgModule({
   declarations: [
     AppComponent,
     RegisterComponent,
     HomeComponent,
-    LoginComponent
+    LoginComponent,
+    CommentsComponent
   ],
   imports: [
     BrowserModule,
@@ -42,7 +45,8 @@ import { LoginComponent } from './login/login.component';
     ])
   ],
   providers: [
-    UserService
+    UserService,
+    CommentsService
   ],
   bootstrap: [AppComponent]
 })

@@ -1,0 +1,12 @@
+<div>
+  <form #form="ngForm" novalidate (ngSubmit)="save(form)">
+    <label>
+      Comment:<br>
+      <textarea ngModel name="comment" required></textarea>
+    </label>
+    <br>
+    <button>Post!</button>
+  </form>
+</div>
+
+<!--<div *ngFor="let c of comments">{{c}}</div>-->

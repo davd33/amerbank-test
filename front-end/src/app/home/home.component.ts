@@ -25,7 +25,7 @@ export class HomeComponent implements OnInit {
     id.subscribe((email) => {
       if (!email) this.router.navigate(['/login']);
       else {
-        if (this.user.isLogged(email)) {
+        if (this.user.isLoggedEmail(email)) {
           this.email = email;
           this.userRole = UserService.getUserNick();
         } else {

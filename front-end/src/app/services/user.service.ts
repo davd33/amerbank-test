@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
+import {Http} from "@angular/http";
 
 import 'rxjs/add/operator/toPromise';
 
 import {environment} from '../../environments/environment';
-import {Http} from "@angular/http";
 
 @Injectable()
 export class UserService {
@@ -14,9 +14,13 @@ export class UserService {
   constructor(private http: Http) {
   }
 
-  isLogged(email: string) {
+  isLoggedEmail(email: string) {
     let userEmail = UserService.getUserEmail();
     return userEmail && decodeURIComponent(userEmail) === email;
+  }
+
+  isLogged() {
+    return UserService.getUserEmail();
   }
 
   logout() {
@@ -72,7 +76,7 @@ export class UserService {
     return localStorage.getItem('user_email');
   }
 
-  private static getUserToken(): string {
+  public static getUserToken(): string {
     return localStorage.getItem('user_token');
   }
 

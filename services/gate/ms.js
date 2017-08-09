@@ -18,7 +18,8 @@ let config = {
 let seneca = Seneca()
   .use('basic')
   .use('entity')
-  .use('./plugin')
+  .use('./user.plugin')
+  .use('./comment.plugin')
   .use(Web, config)
   .use('mesh', {
     isbase: true,
