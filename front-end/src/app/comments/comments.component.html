@@ -11,6 +11,6 @@
 
 <div *ngFor="let c of comments">
   <em>from {{d(c.email)}}</em>
-  <div *ngIf="!c.approved"><button (click)="approve(c.id)">Approve it!</button></div>
+  <div *ngIf="!c.approved && (isAdmin())"><button (click)="approve(c.id)">Approve it!</button></div>
   <p>{{d(c.comment)}}</p>
 </div>

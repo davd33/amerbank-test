@@ -67,7 +67,6 @@ module.exports = function (options) {
               }
             }
 
-            console.log(res)
             done({ok: true, data: res})
           })
       })

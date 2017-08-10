@@ -33,9 +33,9 @@ export class CommentsComponent implements OnInit {
   }
 
   approve(c_id: string) {
-    this.commentService.approve(c_id)
+    this.commentService.approve(c_id, UserService.getUserToken())
       .then(res => {
-        console.log(res);
+        this.listComments();
       })
       .catch(e => {
         console.log(e);
@@ -47,11 +47,16 @@ export class CommentsComponent implements OnInit {
       this.commentService.save(UserService.getUserEmail(), form.controls.comment.value, UserService.getUserToken())
         .then(res => {
           this.listComments();
+          form.reset();
         })
         .catch(e => {
           console.log(e);
         })
     }
+  }
+
+  isAdmin() {
+    return UserService.getUserRole() === 'Admin';
   }
 
 }

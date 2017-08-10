@@ -46,12 +46,13 @@ export class CommentsService {
       .catch(CommentsService.handleError);
   }
 
-  approve(id: string) {
+  approve(id: string, token: string) {
     return this.http
       .post(
         this.approveUrl,
         {
-          id: id
+          id: id,
+          token: token
         }
       )
       .toPromise()
