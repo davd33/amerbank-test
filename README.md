@@ -49,6 +49,11 @@ They will be implemented in the `comment` microservice.
 
 # Application
 
+## TODOs
+
+Look for `TODO` notes within the code with a simple `git grep`
+and you'll find some unresolved dilemmas.
+
 ## Commands
 
 Open the shell and place yourself in the project's directory first.
