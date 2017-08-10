@@ -5,5 +5,5 @@
 
 export const environment = {
   production: false,
-  FRONT_API_URL: "http://davd33-laptop:4222/api"
+  FRONT_API_URL: "http://localhost:4222/api"
 };
