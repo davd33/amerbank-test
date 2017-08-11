@@ -16,7 +16,7 @@ function test_seneca(fin) {
     .use(`../../services/comment/plugin.js`)
     .add('role:user,cmd:auth', function (msg, reply) {
       if (msg.token === 'test-token')
-        reply(null, {ok: true})
+        reply(null, {ok: true, user: {userRole: 'Admin'}})
       else
         reply(null, {ok: false})
     })
@@ -75,6 +75,48 @@ describe('comment', function () {
 
           expect(first.ok).to.equal(true)
 
+          seneca.act('role:comment,cmd:approve',
+            {
+              token: 'test-token',
+              id: first.data.id
+            },
+            (ignore, approvedResult) => {
+
+              expect(approvedResult.ok).to.equal(true)
+
+              seneca.act('role:comment,cmd:save',
+                {
+                  comment: 'my comment is a reply to a cool comment',
+                  email: 'e@mail',
+                  token: 'test-token',
+                  parent: first.data.id
+                },
+                (ignore, second) => {
+                  expect(second.ok).to.equal(true)
+                  expect(second.data.parent).to.equal(first.data.id)
+                }
+              )
+            })
+        }
+      )
+      .ready(fin)
+  })
+
+  it('will not reply to a non approved comment', function (fin) {
+    let seneca = test_seneca(fin)
+
+    seneca
+      .act('role:comment,cmd:save',
+        {
+          comment: 'my comment is a cool comment',
+          email: 'e@mail',
+          token: 'test-token',
+          parent: false
+        },
+        (ignore, first) => {
+
+          expect(first.ok).to.equal(true)
+
           seneca.act('role:comment,cmd:save',
             {
               comment: 'my comment is a reply to a cool comment',
@@ -83,8 +125,7 @@ describe('comment', function () {
               parent: first.data.id
             },
             (ignore, second) => {
-              expect(second.ok).to.equal(true)
-              expect(second.data.parent).to.equal(first.data.id)
+              expect(second.ok).to.equal(false)
             }
           )
         }

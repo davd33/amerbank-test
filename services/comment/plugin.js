@@ -1,16 +1,17 @@
 module.exports = function (options) {
   this.add('role:comment,cmd:save', function (args, done) {
 
-    let authAndSave = (isParent, parentId) => {
+    let authAndSave = (isParent, parent) => {
       this.act('role:user,cmd:auth', {token: args.token}, (err, data) => {
         if (err) return done(err)
         if (!data.ok) return done(data)
+        if (isParent && !parent.approved) return done({ok: false, why: 'not-approved-parent-comment'})
 
         let comment = this.make$('comment', {
           email: args.email,
           comment: args.comment,
           approved: false,
-          parent: isParent ? parentId : false
+          parent: isParent ? parent.id : false
         }).save$((err, ent) => {
 
           if (err) return done(err, ent)
@@ -28,7 +29,7 @@ module.exports = function (options) {
       if (!ent) {
         authAndSave(false)
       } else {
-        authAndSave(true, ent.id)
+        authAndSave(true, ent)
       }
     })
   })
