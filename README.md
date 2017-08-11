@@ -50,17 +50,9 @@ They will be implemented in the `comment` microservice.
 
 # Application
 
-## TODOs
+## Services design
 
-Look for `TODO` notes within the code with a simple `git grep`
-and you'll find some unresolved dilemmas.
-
-###### Current TODOs
-```
-services/comment/plugin.js:        //TODO
-services/comment/plugin.js-        // the plugin 'seneca-store-query' enables to
-services/comment/plugin.js-        // do 'or' queries with mysql and postgres...
-```
+![services-design](./docs/img/services-design.png)
 
 ## Commands
 
@@ -79,3 +71,15 @@ App | Port
 --- | ---
 front API | 4222
 gate Service | 4333
+
+## TODOs
+
+Look for `TODO` notes within the code with a simple `git grep`
+and you'll find some unresolved dilemmas.
+
+###### Current TODOs
+```
+services/comment/plugin.js:        //TODO
+services/comment/plugin.js-        // the plugin 'seneca-store-query' enables to
+services/comment/plugin.js-        // do 'or' queries with mysql and postgres...
+```
