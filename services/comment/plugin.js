@@ -1,21 +1,6 @@
 module.exports = function (options) {
   this.add('role:comment,cmd:save', function (args, done) {
 
-    if (args.parent) {
-      // check that the parent comment exists
-      let c_parent = this.make$('comment')
-
-      c_parent.load$(args.parent, (err, ent) => {
-        if (err) return done(err, ent)
-
-        if (!ent) {
-          authAndSave(false)
-        } else {
-          authAndSave(true, ent.id)
-        }
-      })
-    }
-
     let authAndSave = (isParent, parentId) => {
       this.act('role:user,cmd:auth', {token: args.token}, (err, data) => {
         if (err) return done(err)
@@ -33,6 +18,19 @@ module.exports = function (options) {
         })
       })
     }
+
+    // check that the parent comment exists
+    let c_parent = this.make$('comment')
+
+    c_parent.load$(args.parent, (err, ent) => {
+      if (err) return done(err, ent)
+
+      if (!ent) {
+        authAndSave(false)
+      } else {
+        authAndSave(true, ent.id)
+      }
+    })
   })
 
   this.add('role:comment,cmd:list', function (args, done) {
@@ -48,12 +46,12 @@ module.exports = function (options) {
           done({ok: true, data: ent})
         })
     } else {
-        /**
-         * LIST:
-         *  - approved comments
-         *  - non approved comments if admin
-         *  - non approved comments of own user
-         */
+      /**
+       * LIST:
+       *  - approved comments
+       *  - non approved comments if admin
+       *  - non approved comments of own user
+       */
       this.act('role:user,cmd:auth', {token: token}, (err, data) => {
         if (err) return done(err)
         if (!data.ok) return done(data)
