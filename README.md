@@ -62,6 +62,7 @@ Command name | Command
 --- | ---
 Start project | `npm start`
 Monitor services | `npm run monitor`
+Run tests | `npm test`
 
 ## Configuration
 
