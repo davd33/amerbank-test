@@ -34,6 +34,7 @@ The user's role will be stored in the `name` field of the `user` entity provided
 1. It should be a tree-style comment system
 20. No limitation to the depth of the comments
 30. Comments need approval from admins
+40. Tests for login routes and services
 
 Here as in the section above we will define our messages:
 
@@ -53,6 +54,13 @@ They will be implemented in the `comment` microservice.
 
 Look for `TODO` notes within the code with a simple `git grep`
 and you'll find some unresolved dilemmas.
+
+###### Current TODOs
+```
+services/comment/plugin.js:        //TODO
+services/comment/plugin.js-        // the plugin 'seneca-store-query' enables to
+services/comment/plugin.js-        // do 'or' queries with mysql and postgres...
+```
 
 ## Commands
 
