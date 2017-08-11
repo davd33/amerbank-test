@@ -6,7 +6,8 @@ function api(options) {
     let data = {
       email: msg.args.body.email,
       comment: msg.args.body.comment,
-      token: msg.args.body.token
+      token: msg.args.body.token,
+      parent: msg.args.body.parent
     }
 
     this.act('role:comment,cmd:save', data, respond)

@@ -1,10 +1,11 @@
 <h2>Please register</h2>
 <h3>or <a routerLink="/login">login</a></h3>
 <div>
+  <div *ngIf="errMessage"><em>Error: {{errMessage}}</em></div>
   <form #registerForm="ngForm" novalidate (ngSubmit)="register(registerForm)">
     <label>
       Email:
-      <input type="text" ngModel name="email" required>
+      <input type="text" ngModel name="email" email required>
     </label>
     <label>
       Password:
@@ -12,7 +13,7 @@
     </label>
     <label>
       Role:
-      <select ngModel name="role">
+      <select ngModel name="role" required class="">
         <option *ngFor="let r of roles" [ngValue]="r">{{r.name}}</option>
       </select>
     </label>

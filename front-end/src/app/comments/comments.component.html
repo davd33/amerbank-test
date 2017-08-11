@@ -2,7 +2,10 @@
   <form #form="ngForm" novalidate (ngSubmit)="save(form)">
     <label>
       Comment:<br>
-      <textarea ngModel name="comment" required></textarea>
+      <em *ngIf="parentCommentsEmail">@{{d(parentCommentsEmail)}}</em>
+      <br>
+      <input type="hidden" ngModel name="parent">
+      <textarea #commentArea ngModel name="comment" required></textarea>
     </label>
     <br>
     <button>Post!</button>
@@ -10,7 +13,12 @@
 </div>
 
 <div *ngFor="let c of comments">
-  <em>from {{d(c.email)}}</em>
-  <div *ngIf="!c.approved && (isAdmin())"><button (click)="approve(c.id)">Approve it!</button></div>
+  <em>(Id: {{c.id}}) - from {{d(c.email)}} <span *ngIf="c.parent">@{{d(c.parent)}}</span></em>
+  <div *ngIf="!c.approved && (isAdmin())">
+    <button (click)="approve(c.id)">Approve it!</button>
+  </div>
+  <div *ngIf="c.approved">
+    <span><button (click)="reply(form, commentArea, c.id, c.email)"> - reply</button></span>
+  </div>
   <p>{{d(c.comment)}}</p>
 </div>

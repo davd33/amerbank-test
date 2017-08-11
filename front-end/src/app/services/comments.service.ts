@@ -14,14 +14,15 @@ export class CommentsService {
 
   constructor(private http: Http) { }
 
-  save(email: string, comment: string, token: string) {
+  save(email: string, comment: string, token: string, parent: string) {
     return this.http
       .post(
         this.saveUrl,
         {
           email: email,
           comment: comment,
-          token: token
+          token: token,
+          parent: parent
         }
       )
       .toPromise()

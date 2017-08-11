@@ -1,21 +1,38 @@
 module.exports = function (options) {
   this.add('role:comment,cmd:save', function (args, done) {
 
-    // VERIFY USER AND SAVE COMMENT
-    this.act('role:user,cmd:auth', {token: args.token}, (err, data) => {
-      if (err) return done(err)
-      if (!data.ok) return done(data)
+    if (args.parent) {
+      // check that the parent comment exists
+      let c_parent = this.make$('comment')
 
-      let comment = this.make$('comment', {
-        email: args.email,
-        comment: args.comment,
-        approved: false
-      }).save$((err, ent) => {
-
+      c_parent.load$(args.parent, (err, ent) => {
         if (err) return done(err, ent)
-        done({ok: true, data: ent})
+
+        if (!ent) {
+          authAndSave(false)
+        } else {
+          authAndSave(true, ent.id)
+        }
       })
-    })
+    }
+
+    let authAndSave = (isParent, parentId) => {
+      this.act('role:user,cmd:auth', {token: args.token}, (err, data) => {
+        if (err) return done(err)
+        if (!data.ok) return done(data)
+
+        let comment = this.make$('comment', {
+          email: args.email,
+          comment: args.comment,
+          approved: false,
+          parent: isParent ? parentId : false
+        }).save$((err, ent) => {
+
+          if (err) return done(err, ent)
+          done({ok: true, data: ent})
+        })
+      })
+    }
   })
 
   this.add('role:comment,cmd:list', function (args, done) {

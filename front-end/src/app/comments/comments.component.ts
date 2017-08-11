@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {CommentsService} from "../services/comments.service";
 import {UserService} from "../services/user.service";
 
@@ -10,9 +10,11 @@ import {UserService} from "../services/user.service";
 export class CommentsComponent implements OnInit {
 
   comments: any;
+  parentCommentsEmail: string;
 
   constructor(private commentService: CommentsService,
-              private user: UserService) { }
+              private user: UserService) {
+  }
 
   ngOnInit() {
     this.listComments();
@@ -42,12 +44,24 @@ export class CommentsComponent implements OnInit {
       })
   }
 
+  reply(commentForm, commentArea, commentId, commentAuthor) {
+    commentForm.controls.parent.setValue(commentId);
+    commentArea.focus();
+    this.parentCommentsEmail = commentAuthor;
+  }
+
   save(form) {
     if (this.user.isLogged()) {
-      this.commentService.save(UserService.getUserEmail(), form.controls.comment.value, UserService.getUserToken())
+      this.commentService.save(
+        UserService.getUserEmail(),
+        form.controls.comment.value,
+        UserService.getUserToken(),
+        form.controls.parent.value
+      )
         .then(res => {
           this.listComments();
           form.reset();
+          this.parentCommentsEmail = null;
         })
         .catch(e => {
           console.log(e);

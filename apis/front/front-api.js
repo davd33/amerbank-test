@@ -155,7 +155,8 @@ function commentSaveHandler(request, reply) {
   let payload = {
     token: encodeURIComponent(request.payload.token),
     comment: encodeURIComponent(request.payload.comment),
-    email: encodeURIComponent(request.payload.email)
+    email: encodeURIComponent(request.payload.email),
+    parent: encodeURIComponent(request.payload.parent)
   }
 
   Req.post(
