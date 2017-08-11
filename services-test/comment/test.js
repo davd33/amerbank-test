@@ -22,7 +22,7 @@ function test_seneca(fin) {
     })
 }
 
-describe('comment', function () {
+describe('comment', {timeout: 10000}, function () {
 
   it('will save', function (fin) {
     let seneca = test_seneca(fin)
@@ -128,6 +128,25 @@ describe('comment', function () {
               expect(second.ok).to.equal(false)
             }
           )
+        }
+      )
+      .ready(fin)
+  })
+
+  it('will approve', function (fin) {
+    let seneca = test_seneca(fin)
+
+    seneca
+      .act('role:comment,cmd:approve',
+        {
+          comment: 'my comment is a cool comment',
+          email: 'e@mail',
+          token: 'test-token',
+          parent: false
+        },
+        (ignore, result) => {
+          expect(result.ok).to.equal(true)
+          expect(result.data.approved).to.equal(true)
         }
       )
       .ready(fin)

@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Amerbank interview test.",
   "scripts": {
-    "test": "exit 0",
+    "test": "./scripts/run-tests.sh",
     "start": "./scripts/run-all.sh",
     "monitor": "./scripts/monitor.sh"
   },
