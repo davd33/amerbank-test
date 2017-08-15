@@ -56,7 +56,7 @@ export class UserService {
       .toPromise()
       .then(res => {
         let userLogin = res.json();
-        UserService.storeUser(userLogin)
+        if (userLogin.ok) UserService.storeUser(userLogin);
         return userLogin;
       })
       .catch(UserService.handleError);
