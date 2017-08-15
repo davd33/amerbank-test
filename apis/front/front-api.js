@@ -13,7 +13,7 @@ if (!ServiceUrl) {
 }
 
 // Initiate Hapi Server
-const server = new Hapi.Server();
+const server = exports.server = new Hapi.Server();
 server.connection({
   routes: {
     cors: true
