@@ -26,9 +26,6 @@ echo "Starting front API"
 node "./apis/front/front-api.js" "$APP_NAME" > "$LOG_DIR/front-api" 2>&1 &
 sleep 5
 
-# run angular
-#( cd front-end ; npm start )
-
 # processes running
 echo "Processes running:"
 ps aux | grep -v grep | grep "$APP_NAME"

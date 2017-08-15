@@ -5,7 +5,8 @@
   "scripts": {
     "test": "./scripts/run-tests.sh",
     "start": "./scripts/run-all.sh",
-    "monitor": "./scripts/monitor.sh"
+    "monitor": "./scripts/monitor.sh",
+    "start-ng": "(cd front-end ; npm start)"
   },
   "repository": {
     "type": "git",
