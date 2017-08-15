@@ -11,5 +11,5 @@ done
 for ms in `ls routes-test`
 do
     echo "Testing $ms route"
-    node "./routes-test/$ms/test.js"
+    MS_API_URL='http://mock-api-url' node "./routes-test/$ms/test.js"
 done
