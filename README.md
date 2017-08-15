@@ -85,6 +85,7 @@ Command name | Command
 Start project | `npm start`
 Monitor services | `npm run monitor`
 Run tests | `npm test`
+Run Front End | `npm run start-ng`
 
 ## Configuration
 
